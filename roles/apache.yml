@@ -1,0 +1,10 @@
+---
+- hosts: localhost
+  gather_facts: False
+  become: yes
+#  facts: no
+  tasks:
+  - name: "installing apache"
+    apt:
+      name: apache2
+      state: present

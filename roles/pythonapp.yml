@@ -1,0 +1,28 @@
+---
+- hosts: localhost
+  gather_facts: False
+  become: yes
+  tasks:
+  - name: Install python3
+    apt:
+      name: "{{ item }}"
+      state: present
+    with_items:
+      - python3 
+      - python3-pip
+      - git
+  - name: Git clone
+    git:
+      repo: 'https://github.com/DevProjectsForDevOps/StudentCoursesRestAPI.git'
+      dest: /home/ansible/pythonproject/
+      
+  - name: This command will change the working directory to /home/ansible and will only run when  doesn't exist.
+    command: pip3 install -r requirements.txt
+    args:
+      chdir: /home/ansible/pythonproject/
+      
+  - name: Execute command 'python3 app.py' 
+    command: python3 app.py >/dev/null 2>&1
+    args:
+      chdir: /home/ansible/pythonproject/
+

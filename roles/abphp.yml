@@ -1,0 +1,27 @@
+---
+- hosts: localhost
+  gather_facts: False
+  become: yes
+  tasks:
+  - name: uninstall apache2 and update packages
+    apt:
+      name: apache2
+#      update_cache: yes
+      state: absent
+  - name: uninstall php
+    apt:
+      name: php
+      state: absent
+  - name: uninstall libapache2-mod-php
+    apt:
+      name: libapache2-mod-php
+      state: absent
+  - name: uninstall php-mysql
+    apt:
+      name: php-mysql
+      state: absent
+  - name: uninstall php-cli
+    apt:
+      name: php-cli
+      state: absent
+

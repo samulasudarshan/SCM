@@ -1,0 +1,53 @@
+---
+- hosts: localhost
+  gather_facts: False
+  become: Yes
+  tasks:
+  - name: 
+    apt:
+      name: apache2
+      state: present
+    notify: 
+       - restart and enable apache2
+  - name: install php modules
+    apt:
+      name: "{{ item }}"
+      state: present
+    loop:
+       - php
+       - libapache2-mod-php
+       - php-mysql
+       - php-cli
+    notify:
+        - restart and enable apache2
+  handlers:
+      - name: restart and enable apache2
+        service:
+          name: apache2
+          state: restarted        
+
+- hosts: localhost
+  become: yes
+  tasks:
+    - name: install httpd
+      yum: 
+        name: httpd
+        state: present
+      notify:
+        - restart and enable httpd
+    - name: install php modules
+      yum:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - php
+        - php-mysql
+      notify:
+        - restart and enable httpd
+  handlers:
+    - name: restart and enable httpd
+      service:
+        name: httpd
+        enabled: yes
+        state: restarted
+

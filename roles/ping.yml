@@ -1,0 +1,9 @@
+---
+- hosts: localhost
+  gather_facts: False
+  become: yes
+  tasks:
+  - name: "get ping response" 
+    ping:
+  
+
